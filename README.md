@@ -24,6 +24,7 @@ Built with Python and Tkinter — no heavy dependencies, just simplicity.
 | **Flexible grid layout** | Adjustable column count with resizable panes |
 | **Zoom & Pan** | Scroll to zoom (cursor-centered), click-drag to pan |
 | **Keyboard navigation** | Arrow keys to browse, Home/End to jump |
+| **Direct image jump** | Enter an image number in the toolbar and jump instantly |
 | **Natural sorting** | Files are sorted naturally (`img2` before `img10`) |
 | **EXIF auto-rotation** | Images are automatically oriented correctly |
 | **Fit / Original mode** | Toggle between fit-to-canvas and native resolution |
@@ -56,8 +57,9 @@ python viewer.py
 1. Click **"+ Add Folder"** to load an image directory.
 2. Add more folders to compare images side by side.
 3. Use **← →** arrow keys to navigate through images.
-4. **Scroll** to zoom in/out (centered on cursor).
-5. **Click and drag** to pan around zoomed images.
+4. Enter a value in **Image #** and press **Enter** (or click **Go**) to jump.
+5. **Scroll** to zoom in/out (centered on cursor).
+6. **Click and drag** to pan around zoomed images.
 
 ### Keyboard Shortcuts
 

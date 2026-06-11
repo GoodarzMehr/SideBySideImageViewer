@@ -317,6 +317,23 @@ class App(tk.Tk):
         )
         self._fit_btn.pack(side="left", padx=(0, 16))
 
+        tk.Label(tb, text="Image #:", bg="#333333", fg="white",
+                 font=("sans-serif", 11)).pack(side="left")
+        self._jump_var = tk.StringVar(value="1")
+        self._jump_entry = tk.Entry(
+            tb, width=6, textvariable=self._jump_var,
+            font=("sans-serif", 11), justify="center",
+        )
+        self._jump_entry.pack(side="left", padx=(4, 4))
+        self._jump_entry.bind("<Return>", self._on_jump_submit)
+
+        self._jump_btn = tk.Button(
+            tb, text="Go", command=self._jump_to_from_entry,
+            bg="#555555", fg="white", activebackground="#666666",
+            relief="flat", padx=8, pady=4, font=("sans-serif", 11),
+        )
+        self._jump_btn.pack(side="left", padx=(0, 16))
+
         self._index_label = tk.Label(
             tb, text="0 / 0", bg="#333333", fg="#cccccc",
             font=("sans-serif", 12, "bold"),
@@ -473,6 +490,24 @@ class App(tk.Tk):
         self._current_index = max(0, min(index, self._max_length - 1))
         self._schedule_load()
 
+    def _on_jump_submit(self, _event):
+        self._jump_to_from_entry()
+
+    def _jump_to_from_entry(self):
+        """Jump to a 1-based image number entered by the user."""
+        if self._max_length == 0:
+            self._jump_var.set("0")
+            return
+
+        try:
+            requested = int(self._jump_var.get().strip())
+        except ValueError:
+            requested = self._current_index + 1
+
+        requested = max(1, min(requested, self._max_length))
+        self._jump_var.set(str(requested))
+        self._go_to(requested - 1)
+
     def _schedule_load(self):
         """Update the index label immediately and debounce the expensive image load.
 
@@ -537,10 +572,12 @@ class App(tk.Tk):
     def _update_index_label(self):
         if self._max_length == 0:
             self._index_label.config(text="0 / 0")
+            self._jump_var.set("0")
         else:
             self._index_label.config(
                 text=f"{self._current_index + 1} / {self._max_length}"
             )
+            self._jump_var.set(str(self._current_index + 1))
 
     # -- columns spinner -----------------------------------------------------
 
